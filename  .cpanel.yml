@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/mzwi5j2sbj6b/public_html/developer.smarttripmaker.com
+    - /bin/cp * $DEPLOYPATH
