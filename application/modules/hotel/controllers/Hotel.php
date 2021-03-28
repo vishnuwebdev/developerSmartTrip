@@ -303,12 +303,6 @@ class Hotel extends MX_Controller {
 			$arrayresult = json_decode($result);
 			$_SESSION ['hotel'] ['array'] ['search_result'] = $arrayresult;
 			$_SESSION ['hotel'] ['nights']= $nights;
-			
-			// echo "<pre>";
-			// print_r($result);
-			// echo "</pre>";
-			// die;
-			
 			redirect ( "hotel/result" );
 		} else {
 
@@ -730,54 +724,6 @@ class Hotel extends MX_Controller {
 				$bp_select_room_array ["Price"]['ServiceTax'] = $bp_room_datas->Price->ServiceTax;
 				$bp_select_room_array ["Price"]['TDS'] = getDecimal($bp_room_datas->Price->TDS);
 				
-
-				
-
-				// $bp_select_room_array ["Price"]->OtherCharges = isset($bp_select_room_array ["Price"]->OtherCharges) ? number_format($bp_select_room_array ["Price"]->OtherCharges,2): null;
-				// $bp_select_room_array ["Price"]->RoomPrice = isset($bp_select_room_array ["Price"]->RoomPrice) ? number_format($bp_select_room_array ["Price"]->RoomPrice,2): null;
-				// $bp_select_room_array ["Price"]->PublishedPrice = isset($bp_select_room_array ["Price"]->PublishedPrice) ? number_format($bp_select_room_array ["Price"]->PublishedPrice,2): null;
-				// $bp_select_room_array ["Price"]->OfferedPrice = isset($bp_select_room_array ["Price"]->OfferedPrice) ? number_format($bp_select_room_array ["Price"]->OfferedPrice,2): null;
-				// $bp_select_room_array ["Price"]->AgentCommission = isset($bp_select_room_array ["Price"]->AgentCommission) ? number_format($bp_select_room_array ["Price"]->AgentCommission,2): null;
-				// $bp_select_room_array ["Price"]->ServiceTax = isset($bp_select_room_array ["Price"]->ServiceTax) ? number_format($bp_select_room_array ["Price"]->ServiceTax,2): null;
-				// $bp_select_room_array ["Price"]->TDS = isset($bp_select_room_array ["Price"]->TDS) ? number_format($bp_select_room_array ["Price"]->TDS,2): null;
-				// $bp_select_room_array ["Price"]->TotalGSTAmount = isset($bp_select_room_array ["Price"]->TotalGSTAmount) ? number_format($bp_select_room_array ["Price"]->TotalGSTAmount,2): null;
-				// $bp_select_room_array ["ChildCount"] = $bp_room_datas->ChildCount;
-				// $bp_select_room_array ["RequireAllPaxDetails"] = $bp_room_datas->RequireAllPaxDetails;
-				// $bp_select_room_array ["RoomId"] = $bp_room_datas->RoomId;
-				// $bp_select_room_array ["RoomStatus"] = $bp_room_datas->RoomStatus;
-				// $bp_select_room_array ["RatePlan"] = $bp_room_datas->RatePlan;
-				// $bp_select_room_array ["InfoSource"] = $bp_room_datas->InfoSource;
-				// $bp_select_room_array ["SequenceNo"] = $bp_room_datas->SequenceNo;
-				// foreach ( $bp_room_datas->DayRates as $date_key => $bp_dates_value ) {
-				// 	$bp_select_room_array ["DayRates"] [$date_key] ['Amount'] = number_format($bp_dates_value->Amount,2);
-				// 	$bp_select_room_array ["DayRates"] [$date_key] ['Date'] = $bp_dates_value->Date;
-				// }
-				// $bp_select_room_array ["SupplierPrice"] = $bp_room_datas->SupplierPrice;
-				// $bp_select_room_array ["Price"] = $bp_room_datas->Price;
-				// $bp_select_room_array ["Price"]->RoomPrice = ceil($bp_select_room_array ["Price"]->RoomPrice);
-				// $bp_select_room_array ["Price"]->OtherCharges = isset($bp_select_room_array ["Price"]->OtherCharges) ? number_format($bp_select_room_array ["Price"]->OtherCharges,2): null;
-				// $bp_select_room_array ["Price"]->RoomPrice = isset($bp_select_room_array ["Price"]->RoomPrice) ? number_format($bp_select_room_array ["Price"]->RoomPrice,2): null;
-				// $bp_select_room_array ["Price"]->PublishedPrice = isset($bp_select_room_array ["Price"]->PublishedPrice) ? number_format($bp_select_room_array ["Price"]->PublishedPrice,2): null;
-				// $bp_select_room_array ["Price"]->OfferedPrice = isset($bp_select_room_array ["Price"]->OfferedPrice) ? number_format($bp_select_room_array ["Price"]->OfferedPrice,2): null;
-				// $bp_select_room_array ["Price"]->AgentCommission = isset($bp_select_room_array ["Price"]->AgentCommission) ? number_format($bp_select_room_array ["Price"]->AgentCommission,2): null;
-				// $bp_select_room_array ["Price"]->ServiceTax = isset($bp_select_room_array ["Price"]->ServiceTax) ? number_format($bp_select_room_array ["Price"]->ServiceTax,2): null;
-				// $bp_select_room_array ["Price"]->TDS = isset($bp_select_room_array ["Price"]->TDS) ? number_format($bp_select_room_array ["Price"]->TDS,2): null;
-				// $bp_select_room_array ["Price"]->TotalGSTAmount = isset($bp_select_room_array ["Price"]->TotalGSTAmount) ? number_format($bp_select_room_array ["Price"]->TotalGSTAmount,2): null;
-				// if(isset($bp_select_room_array ["Price"]->GST->IGSTAmount)){
-				// 	//  PrintArray($bp_select_room_array ["Price"]->GST->IGSTAmount);
-				// 	 $bp_select_room_array ["Price"]->GST->IGSTAmount =  number_format($bp_select_room_array ["Price"]->GST->IGSTAmount,2);
-				// }
-				// $bp_select_room_array ["RoomPromotion"] = $bp_room_datas->RoomPromotion;
-				// $bp_select_room_array ["Amenities"] = $bp_room_datas->Amenities;
-				// $bp_select_room_array ["SmokingPreference"] = "0";
-				// $bp_select_room_array ["BedTypes"] = $bp_room_datas->BedTypes;
-				// $bp_select_room_array ["HotelSupplements"] = $bp_room_datas->HotelSupplements;
-				// $bp_select_room_array ["LastCancellationDate"] = $bp_room_datas->LastCancellationDate;
-				// $bp_select_room_array ["CancellationPolicies"] = $bp_room_datas->CancellationPolicies;
-				// $bp_select_room_array ["CancellationPolicy"] = $bp_room_datas->CancellationPolicy;
-				// $bp_select_room_array ["Inclusion"] = $bp_room_datas->Inclusion;
-				// $bp_select_room_array ["BedTypeCode"] = NULL;
-				
 				$roominfo [] = $bp_select_room_array;
 				unset ( $bp_select_room_array );
 			}
@@ -786,10 +732,7 @@ class Hotel extends MX_Controller {
 		$room = $_SESSION ['hotel'] ['search_data'] ['room'];
 		$bp_srdv_index = $this->input->post ( "s_index" );
 		$bp_trace_id = $_SESSION ['hotel'] ['array'] ['search_result']->HotelSearchResult->TraceId;
-		//$bp_srdv_type = $_SESSION ['hotel'] ['array'] ['search_result']->SrdvType;
 		$bp_hotel_post_data = $_SESSION ['hotel'] ['array'] ['hotel_info_request_post'];
-		//new block]
-		
 		$data_json = array(
             "ResultIndex" => $bp_hotel_post_data ['result_index'],
             "HotelCode" => $bp_hotel_post_data ['hotel_code'],
@@ -803,9 +746,7 @@ class Hotel extends MX_Controller {
             "TokenId" => $this->TokenId,
             "TraceId" => $bp_trace_id,
         );
-		
         $data_string = json_encode($data_json);
-		
 		$_SESSION ['hotel'] ['json'] ['hotel_block_request'] = $data_string;
         $ch = curl_init($this->url . '/BlockRoom/');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
@@ -816,8 +757,6 @@ class Hotel extends MX_Controller {
             'Content-Length: ' . strlen($data_string),
         ));
         $result = curl_exec($ch);
-		
-       
 		$_SESSION ['hotel'] ['json'] ['hotel_block_result'] = $result;
         $result_array = json_decode($result);
 		$_SESSION ['hotel'] ['array'] ['hotel_block_result'] = $result_array; 
@@ -874,6 +813,9 @@ class Hotel extends MX_Controller {
 	}
 
 	public function save_booking_data() {
+		if($this->session->has_userdata('hotel_post_data')){ 
+			$this->session->unset_userdata('hotel_post_data');
+		}
 		if (isset ( $_SESSION ['hotel'] ['array'] ['search_request'] ['RoomGuests'] )) {
 			$bp_pax_request = $_SESSION ['hotel'] ['array'] ['search_request'] ['RoomGuests'];
 			$_SESSION['payment_method']=$this->input->post ( 'payment_method' );
@@ -961,8 +903,6 @@ class Hotel extends MX_Controller {
 			$depart_date_time_arrray = explode("/",$_SESSION ['hotel'] ['array'] ['search_request']['CheckInDate']);
 			$depart_date_time = $depart_date_time_arrray['2']."-".$depart_date_time_arrray['1']."-".$depart_date_time_arrray['0'];
 			$data ['depart_date'] = $depart_date_time. "T00:00:00";
-
-			
 			//booking new
 			//$this->db_token();
 			$data_json = array(
@@ -991,7 +931,6 @@ class Hotel extends MX_Controller {
 				"TokenId" => $this->TokenId,
 				"TraceId" => $bp_trace_id,
 			);
-			
 			$data_string = json_encode($data_json);
 			//new booking
 			$_SESSION ['hotel'] ['json'] ['hotel_book_request'] = $data_string;
@@ -1005,19 +944,16 @@ class Hotel extends MX_Controller {
 				$bp_adult = $bp_adult + $no_of_room_loop->NoOfAdults;
 				$bp_child = $bp_child + $no_of_room_loop->NoOfChild;
 			}
-
 			if ($this->session->userdata('Userlogin') != NULL) {
 				$cusid = $this->session->userdata('Userlogin')['userData']->cust_id;
 			} else {
 				$cusid = 0;
 			}
-			
 			if ($this->input->post ( 'payment_method' )== "cc_avenue") {
 				$transaction_fee = $_SESSION['hotel']['Conv_fee'];
 			} else {
 				$transaction_fee = 0;
 			}
-			
 			$booking_data = array (
 					"hotboli_city_name" => $_SESSION ['hotel'] ['search_data'] ['cityName'],
 					"hotboli_city_id" => $_SESSION ['hotel'] ['search_data'] ['cityName'],
@@ -1051,9 +987,7 @@ class Hotel extends MX_Controller {
 					"hotboli_transaction_fee" =>$transaction_fee,
 			);
 			$bp_booking_id = $this->Hotel_Model->insert_booking ( $booking_data );
-			
 			$_SESSION ['booking_id'] =$bp_booking_id;
-
 			foreach ( $data_json ['HotelRoomsDetails'] as $bp_room_key_p => $hotel_room_detail_loop ) {
 				foreach ( $hotel_room_detail_loop ['HotelPassenger'] as $hotel_room_detail_loops ) {
 					$bp_room_no = $bp_room_key_p + 1;
@@ -1098,6 +1032,8 @@ class Hotel extends MX_Controller {
 					"hotdata_data" => $bp_selected_hotel_data 
 			);
 			$this->Hotel_Model->insert_temp_data ( $temp_data );
+			$hotelPostData = $this->input->post();
+			$this->session->set_userdata('hotel_post_data',$hotelPostData);
 			redirect ( "hotel/payment_request" );
 		} else {
 			$_SESSION ['bp_error_message'] = "Oops! Something went wrong. This page didn't load data. Please search again! ";
@@ -1110,6 +1046,9 @@ class Hotel extends MX_Controller {
 		// if(!$this->session->userdata("Userlogin")){
 		// 	return redirectBack();
 		// }
+		if($this->session->has_userdata('wallet_amount_detected_hotel')){ 
+			$this->session->unset_userdata('wallet_amount_detected_hotel');
+		}
 		$booking_id =$_SESSION['booking_id'];
 		$remark = "Hotel Booking (ID - " . $booking_id . ")";		
 		$totalFare = $_SESSION ['hotel'] ['amount'] ['customer_fare'];
@@ -1117,8 +1056,13 @@ class Hotel extends MX_Controller {
 		if(isset($_SESSION['coupon_applied']) && $_SESSION['coupon_applied'] == true && $_SESSION['coupon_amount'] > 0){
 			$totalFare = $totalFare - $_SESSION['coupon_amount'];
 		}
-		$wallet_amount_detected = 0;
-		if ($this->input->post ( 'wallet_amount' ) == "customerCash") {
+		$wallet_amount_detected = $this->user_data->cust_balance;
+		$postData = [];
+		if($this->session->has_userdata('hotel_post_data')){ 
+			$postData = $this->session->userdata('hotel_post_data');
+			$this->session->unset_userdata('hotel_post_data');
+		}
+		if (isset($postData['wallet_amount']) && $postData['wallet_amount'] == "customerCash") {
 	        if($this->user_data->cust_balance > 0){
 	            if($this->user_data->cust_balance >= $totalFare){
 	                $user_id = $this->session->userdata['Userlogin']["id"];
@@ -1130,7 +1074,7 @@ class Hotel extends MX_Controller {
 		                    "customer_id" => $user_id,
 		                    "amount_detected" => $totalFare,
 		                    "amount_added" => 0,
-		                    "wallet_action_detail" => 'Flight payment paid by wallet.',
+		                    "wallet_action_detail" => 'Hotel Booking payment paid by wallet.',
 		                    "created" => date('y-m-d h:i:s')
 		                );
 		                $this->VisaModel->insert_table('stm_wallet_history',$formData);
@@ -1140,15 +1084,12 @@ class Hotel extends MX_Controller {
 			            redirect('hotel');
 					}
 	            }else {
-	                $this->session->set_userdata("wallet_amount_detected_flight", $this->user_data->cust_balance); 
-	                $wallet_amount_detected = $this->user_data->cust_balance;
+	                $this->session->set_userdata("wallet_amount_detected_hotel", $this->user_data->cust_balance); 
 	            }
-	        }else {
-	            $this->session->set_flashdata('flash_error','Insufficient wallet balance. Please try again.');
-	            redirect('hotel');
 	        }
 		}
-		if(empty($this->input->post ( 'wallet_amount' )) || ($this->input->post ( 'wallet_amount' ) == "customerCash" && $this->user_data->cust_balance < $totalFare)) {
+		PrintArray($_SESSION); die("Testing the wallet amount");
+		if(isset($postData['wallet_amount']) && (empty($postData['wallet_amount']) || ($postData['wallet_amount'] == "customerCash" && $wallet_amount_detected < $totalFare))) {
 			$bp_user_id = $this->dsa_data->dsa_id;
 			$getwayList = $this->Common_Model->get_table_row("*", array(
 				"dsapayg_user_type" => "DSA",
@@ -1195,15 +1136,14 @@ class Hotel extends MX_Controller {
 				}else{
 					$this->load->view ( 'hotel/payment_cc_avenue', $data);
 				}
-				
 			} else {
 		   	 	$bp_home_url = site_url ();
 				$_SESSION['error'] = "Something Went Wrong Please Contact Admin. <a href='$bp_home_url'>Go to Home</a>";			
+				redirect("hotel/payment_error");
 			}
 		}
 		//end ccu
 	}
-
 
 	/**	AED Transaction Implementing */
 	private function loadAEDPaymentTransaction($data){
@@ -1237,7 +1177,6 @@ class Hotel extends MX_Controller {
 			return redirect('/hotel');
 		}
 	}
-
 
 	/** Payment Gateway response Handler (PAYD Payment Gateway) */
 	public function payment_payd_response(){
@@ -1323,12 +1262,11 @@ class Hotel extends MX_Controller {
         if ($paymentstatus == "success") {
 			$remark = "Hotel Booking (ID - " . $BookingId . ")";
 			$bp_dsa_amount = $_SESSION ['hotel'] ['amount'] ['dsa_fare'];
-			$bp_dsa_payment_status = $this->deduct_dsa_balance ( $remark, $bp_dsa_amount );
-				
-				if ("success" == "success") {
-							redirect ( "hotel/book" );
-				} else {
-					echo "There is some problem in booking. Please contact Super Admin";
+			$bp_dsa_payment_status = $this->deduct_dsa_balance ( $remark, $bp_dsa_amount );	
+			if ("success" == "success") {
+						redirect ( "hotel/book" );
+			} else {
+				echo "There is some problem in booking. Please contact Super Admin";
 			}
         } else {
             $this->load->view("hotel/payment_error");
@@ -1389,61 +1327,57 @@ class Hotel extends MX_Controller {
 	public function payment_result_cash() {
 		$BookingId =$_SESSION ['booking_id'];
 		$status = "Success";
-
 		$data = array (
 			'hotboli_payment_status' => $status 
 		);
 		$this->Hotel_Model->update_booking ( $data, $BookingId );
-		
 		if ($status == "Success") {
-			
 			$remark = "Hotel Booking (ID - " . $BookingId . ")";
 			$bp_dsa_amount = $_SESSION ['hotel'] ['amount'] ['dsa_fare'];
 			$bp_dsa_payment_status = $this->deduct_dsa_balance ( $remark, $bp_dsa_amount );
-				
-				if ("success" == "success") {
-							redirect ( "hotel/book" );
-				} else {
-					echo "There is some problem in booking. Please contact Super Admin";
+			if ("success" == "success") {
+				redirect ( "hotel/book" );
+			} else {
+				echo "There is some problem in booking. Please contact Super Admin";
 			}
-			
 		} else {
 			redirect ( 'hotel/payment_error');
 		}
-
 	}
 	
 	//=========deduct custome balance
 	function deduct_customer_balance($remark, $totalFare) {
-		// $bp_dsa_id = $this->customerdata->cust_id;
-		//$bp_dsa_company_name = $this->customerdata->cust_first_name;
 		$bp_dsa_id = $this->session->userdata("Userlogin")['userData']->cust_id;
 		$bp_dsa_company_name = $this->session->userdata("Userlogin")["name"];		
-		
 		$bp_credit = $totalFare;
-		//print_r($bp_dsa_id);die;
 		$bp_old_balance = $this->user_data->cust_balance;
-		//print_r($bp_old_balance );die;
-		if ($bp_old_balance >= $bp_credit) {
-			$bp_new_balance = $bp_old_balance - $bp_credit;
+		if ($bp_old_balance >= $bp_credit || $this->session->has_userdata('wallet_amount_detected_hotel')) {
+			if($this->session->has_userdata('wallet_amount_detected_hotel')){
+				$bp_new_balance = 0;
+			}else{
+				$bp_new_balance = $bp_old_balance - $bp_credit;
+			}
 			$data_2 = array (
-					"balance_log_user_id" => $bp_dsa_id,
-					"balance_log_user_name" => $bp_dsa_company_name,
-					"balance_log_user_type" => "customer",
-					"balance_log_detail" => $remark,
-					"balance_log_debit" => $bp_credit,
-					"balance_log_balance" => $bp_new_balance,
-					"balance_log_update_by" => "Auto" 
+				"balance_log_user_id" => $bp_dsa_id,
+				"balance_log_user_name" => $bp_dsa_company_name,
+				"balance_log_user_type" => "customer",
+				"balance_log_detail" => $remark,
+				"balance_log_debit" => $bp_credit,
+				"balance_log_balance" => $bp_new_balance,
+				"balance_log_update_by" => "Auto" 
 			);
 			$table = "balance_log";
 			$this->Common_Model->insert_table ( $table, $data_2 );
 			$data1 = array (
-					"cust_balance" => $bp_new_balance 
+				"cust_balance" => $bp_new_balance 
 			);
 			$table = "customer";
 			$where = "cust_id";
 			$where_val = $this->session->userdata("Userlogin")['userData']->cust_id;
 			$this->Common_Model->update_table ( $where, $where_val, $table, $data1 );
+			if($this->session->has_userdata('wallet_amount_detected_hotel')){
+				$this->session->unset_userdata('wallet_amount_detected_hotel');
+			}
 			return "success";
 		} else {
 			return "not";
@@ -1454,49 +1388,40 @@ class Hotel extends MX_Controller {
     public function payment_razorpay() {
 		if (!empty($this->input->post('razorpay_payment_id')) ) {
 			$BookingId =$_SESSION ['booking_id'];
-				$status = "Success";
-			
+			$status = "Success";
 			if(isset($_SESSION['hotel_booking_type'])){
 				if($_SESSION['hotel_booking_type'] = "extranet"){
 					$data = array (
-				'hoffbo_amount_status' => $status,
-				'hoffbo_status' => $status, 
-			);
-			$this->Hotel_Model->update_booking_offline ( $data, $BookingId );
-			
-			if ($status == "Success") {
-				$remark = "Hotel Booking (ID - " . $BookingId . ")";
-					
-					
-			redirect ( "hotel/book_result" );
-					
-			
-			} else {
-				redirect ( 'hotel/payment_error');
-			}
+						'hoffbo_amount_status' => $status,
+						'hoffbo_status' => $status, 
+					);
+					$this->Hotel_Model->update_booking_offline ( $data, $BookingId );
+					if ($status == "Success") {
+						$remark = "Hotel Booking (ID - " . $BookingId . ")";
+						redirect ( "hotel/book_result" );
+					} else {
+						redirect ( 'hotel/payment_error');
+					}
 				}
 			}else{
-			$data = array (
-				'hotboli_payment_status' => $status,
-				'hotboli_booking_status' => $status, 
-		);
-		$this->Hotel_Model->update_booking ( $data, $BookingId );
-		
-		if ($status == "Success") {
-			$remark = "Hotel Booking (ID - " . $BookingId . ")";
-			$bp_dsa_amount = $_SESSION ['hotel'] ['amount'] ['dsa_fare'];
-			$bp_dsa_payment_status = $this->deduct_dsa_balance ( $remark, $bp_dsa_amount );
-				
-				if ("success" == "success") {
-							redirect ( "hotel/book" );
+				$data = array (
+					'hotboli_payment_status' => $status,
+					'hotboli_booking_status' => $status, 
+				);
+				$this->Hotel_Model->update_booking ( $data, $BookingId );
+				if ($status == "Success") {
+					$remark = "Hotel Booking (ID - " . $BookingId . ")";
+					$bp_dsa_amount = $_SESSION ['hotel'] ['amount'] ['dsa_fare'];
+					$bp_dsa_payment_status = $this->deduct_dsa_balance ( $remark, $bp_dsa_amount );
+					if ("success" == "success") {
+						redirect ( "hotel/book" );
+					} else {
+						echo "There is some problem in booking. Please contact Super Admin";
+					}
 				} else {
-					echo "There is some problem in booking. Please contact Super Admin";
+					redirect ( 'hotel/payment_error');
+				}
 			}
-		
-		} else {
-			redirect ( 'hotel/payment_error');
-		}
-		}
 		} else {
 			redirect ( 'hotel/payment_error');
 		}
@@ -1553,16 +1478,60 @@ class Hotel extends MX_Controller {
 	}
 
 	public function payment_error() {
+		if(isset($_SESSION['booking_id']) && !empty($_SESSION['booking_id'])){
+			$this->handleRefundDeduction($_SESSION['booking_id']);
+		}
 		$this->load->view ( "hotel/payment_error" );
 	}
 
+	private function handleRefundDeduction($bookingId){
+		$user_id = $this->session->userdata['Userlogin']["id"];
+		if(!empty($user_id) && !empty($bookingId)){
+			//Wallet Refund
+			$refundData = $this->Hotel_Model->getRefundData($bookingId,$user_id);
+			$userInfo = $this->Hotel_Model->getUserInfo($user_id);
+			if(!empty($refundData) && !empty($userInfo)){
+				$deductedAmount = $refundData->amount_detected;
+				$customerBal = $userInfo->cust_balance;
+				$RefundedBal = $deductedAmount + $customerBal;
+				$this->Hotel_Model->setWalletHistoryRefunded($bookingId,$user_id);
+				$this->Hotel_Model->refundUserBal($user_id,$RefundedBal);
+			}
+			//Payment Gateway Refund
+			$razorPayTransaction = $this->Hotel_Model->getPaymentGatewayData($bookingId);
+			if($razorPayTransaction && $razorPayTransaction->payment_data){
+				$decode = json_decode($razorPayTransaction->payment_data);
+				$amount = $razorPayTransaction->amount;
+				if($decode && $decode->razor_pay_response){
+					$razoyPayData = json_decode($decode->razor_pay_response);
+					$paymentId = $razoyPayData->razorpay_payment_id;
+					$response = $this->refundRazorPayment($paymentId,json_encode($requestData));
+					if(isset($response['id'])){
+						$this->Hotel_Model->updatePaymentGatewayRefund($bookingId,json_encode($response));
+					}
+				}
+			}
+		}
+	}
+
+	private function refundRazorPayment($paymentId){
+        $ch = curl_init(RAZOR_PAY_HOST.'payments/'.$paymentId.'/refund');
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_USERPWD, RAZOR_API_KEY . ":" . RAZOR_CLIENT_SECRET);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json',
+		));
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($result,true);
+    }
+
 	public function book() {
-		
+		PrintArray($_SESSION); die;
 		if (isset ( $_SESSION ['hotel'] ['array'] ['search_request'] ['RoomGuests'] )) {
 			$data_string = $_SESSION ['hotel'] ['json'] ['hotel_book_request'];
 			$dataString = json_decode($data_string,true);
-			//$dataString['HotelRoomsDetails'][0]['HotelPassenger'][0]['PAN'] = 'EBQPS3333T';
-			
 			$data_string = json_encode($dataString);
 			echo $this->url . '/Book/';
 			$ch = curl_init($this->url . '/Book/');
@@ -1580,12 +1549,12 @@ class Hotel extends MX_Controller {
 			//end new
 			if (isset ( $result_array->BookResult->Error->ErrorCode )) {
 				if ($result_array->BookResult->Error->ErrorCode == "0") {
-				$dataB = array (
-							'hotboli_book_confim_number' 	=> $result_array->BookResult->ConfirmationNo,
-							'hotboli_booking_id' 			=> $result_array->BookResult->BookingId, 
-							'hotboli_booking_status'     	=> "Success"	
-						);
-						//$this->Hotel_Model->update_booking ( $dataB, $BookingId );
+					$dataB = array (
+						'hotboli_book_confim_number' 	=> $result_array->BookResult->ConfirmationNo,
+						'hotboli_booking_id' 			=> $result_array->BookResult->BookingId, 
+						'hotboli_booking_status'     	=> "Success"	
+					);
+					//$this->Hotel_Model->update_booking ( $dataB, $BookingId );
 					$this->Hotel_Model->update_booking ( $dataB, $_SESSION['booking_id'] );
 					if ($result_array->BookResult->HotelBookingStatus == "Confirmed") {
 						$data= $this->Hotel_Model->get_pax_data($_SESSION['booking_id']);
@@ -1602,28 +1571,41 @@ class Hotel extends MX_Controller {
 						$mail_id = $data->hotbopax_email;
 						$sender_subject = "Your hotel booked successful ( Booking ID :".$_SESSION['booking_id'].")" ;
 						// email_send($mail_id, $sender_subject, $message, $emailconfig,$content);
+						var_dump($this->session->has_userdata('wallet_amount_detected_hotel'));
+						
+						if($this->session->has_userdata('wallet_amount_detected_hotel')){
+							echo "test";
+							$deductAmount = $this->session->userdata('wallet_amount_detected_hotel');
+							$remark = "Hotel Booking amount deduction from wallet.";
+							$this->deduct_customer_balance($remark,$deductAmount);
+						}
 						email_send($mail_id, $sender_subject, $message);
-						redirect ( "hotel/booking_result" );
+						die("tets");
+						// redirect ( "hotel/booking_result" );
 					} else {
 						$_SESSION ['bp_error_message'] = "Oops! Something went wrong. This page didn't load data. Please search again! (" . $result_array->BookResult->Error->ErrorMessage . ")";
 						$_SESSION ['bp_error_class'] = "alert-warning";
-						$this->load->view ( "bp_error" );
+						// $this->load->view ( "bp_error" );
+						redirect("hotel/payment_error");
 					}
 				} else {
 					$_SESSION ['bp_error_message'] = "Oops! Something went wrong. This page didn't load data. Please search again! (" . $result_array->BookResult->Error->ErrorMessage . ")";
 					$_SESSION ['bp_error_class'] = "alert-warning";
-					$this->load->view ( "bp_error" );
+					// $this->load->view ( "bp_error" );
+					redirect("hotel/payment_error");
 				}
 			} else {
 				$_SESSION ['bp_error_message'] = "Oops! Something went wrong. This page didn't load data. Please search again! ";
 				$_SESSION ['bp_error_class'] = "alert-warning";
-				$this->load->view ( "bp_error" );
+				// $this->load->view ( "bp_error" );
+				redirect("hotel/payment_error");
 			}
 		} else {
 		
 			$_SESSION ['bp_error_message'] = "Oops! Something went wrong. This page didn't load data. Please search again! ";
 			$_SESSION ['bp_error_class'] = "alert-warning";
-			$this->load->view ( "bp_error" );
+			// $this->load->view ( "bp_error" );
+			redirect("hotel/payment_error");
 		}
 	}
 
@@ -2106,8 +2088,6 @@ class Hotel extends MX_Controller {
 			$this->session->set_flashdata('flash_error','Sorry! Unable to proceed your payment request. Please try again.');
 		}else{
 			$data['gatewayData'] = $orderResponse;
-			$data['email'] = $this->input->post('cust_email');
-			$data['phone'] = $this->input->post('cust_mobile_no');
 			$this->session->set_userdata('hotelTransactionData', $data);
 			$this->load->view('razor_gateway_submit',$data);
 		}

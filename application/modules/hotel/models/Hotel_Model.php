@@ -500,4 +500,56 @@ function insert_pax_offline($data){
         return $this->db->insert_id();
     }
 	
+
+	function getRefundData($bookingId, $userId){
+		$this->db->select("*");
+		$this->db->from('stm_wallet_history');
+		$this->db->where('order_id',$bookingId);
+		$this->db->where('customer_id',$userId);
+		$this->db->where('actionType IS NULL', null, false);
+		$query = $this->db->get();
+		return ($query->num_rows() == '') ? null : $query->row();
+	}
+
+	function getPaymentGatewayData($bookingId){
+		$this->db->select("*");
+		$this->db->from('hotel_payment_history');
+		$this->db->where('booking_id',$bookingId);
+		$this->db->where('order_status',"Success");
+		$this->db->where('actionType IS NULL', null, false);
+		$query = $this->db->get();
+		return ($query->num_rows() == '') ? null : $query->row();
+	}
+
+
+	function refundUserBal($user_id,$RefundedBal){
+		$this->db->where('cust_id', $user_id);
+		$this->db->update('customer', ['cust_balance'=>$RefundedBal]); 
+	}
+
+	function setWalletHistoryRefunded($bookingId,$user_id){
+		$this->db->where('order_id',$bookingId);
+		$this->db->where('customer_id',$user_id);
+		$this->db->where('actionType IS NULL', null, false);
+		$this->db->update('stm_wallet_history', ['actionType'=>'ReFund']); 
+	}
+
+	function updatePaymentGatewayRefund($bookingId,$data){
+		$this->db->where('booking_id',$bookingId);
+		$this->db->where('order_status',"Success");
+		$this->db->where('actionType IS NULL', null, false);
+		$this->db->update('hotel_payment_history', ['actionType'=>'ReFund','action_data'=>$data]); 
+	}
+
+	function getUserInfo( $userId){
+		$this->db->select("*");
+		$this->db->from('customer');
+		$this->db->where('cust_id',$userId);
+		$query = $this->db->get();
+		if($query->num_rows() ==''){
+			return null;
+		}else{
+			return $query->row();
+		}
+	}
 }

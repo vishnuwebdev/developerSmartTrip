@@ -43,8 +43,8 @@
             },
             "prefill": {
                 "name": "<?= $gateway_data['delivery_name'] ?>",
-                "email": "<?= $email ?>",
-                "contact": "+91<?= $phone ?>"
+                "email": "<?= $gateway_data['billing_email'] ?>",
+                "contact": "+91<?= $gateway_data['billing_tel'] ?>"
             },
             "notes": {
                 "order_id": "<?= $gateway_data['order_id']?>"
