@@ -1,5 +1,11 @@
 <style>
-	div.multiple_select_checkbox { width: 100%;height: 160px;overflow-x: hidden;overflow-y: auto;border: 1px solid #CCCCCC; }
+	div.multiple_select_checkbox { 
+		width: 100%;
+		height: 160px;
+		overflow-x: hidden;
+		overflow-y: auto;
+		border: 1px solid #CCCCCC; 
+		}
 </style>
 <script src="<?php echo site_url();?>assets/js/modernizr.js"></script>
 <link rel="stylesheet" href="<?php echo site_url();?>assets/css/modernizr.css" />
@@ -9,7 +15,6 @@
 	$this->load->view('include/header'); 
 	$baggageData = 0;
 	$result = $confrimdata->Response->Results;
-	
 	$segment = $result->Segments;
 	$traceID = $confrimdata->Response->TraceId;
 	$old_selected_data=json_decode ($_SESSION ["flight"] [$this->input->get('seesionid')] ["Search_Result_json"]);
@@ -488,12 +493,7 @@
 						<!--/ Traveller Details Start From here -->
 					</form>
 				</div>
-									
-				
 			</div>
-		
-			
-
 			<div class="col-md-3">
 				<div class="flght-side-det">
 					<div class="review_title clearfix">
@@ -565,10 +565,7 @@
 			</div>
 		</div>
 	</div>
-	
 </section>
-
-
 
 <!----Baggage Fare Rule----->
 <!--baggage and fare rule popup start here-->

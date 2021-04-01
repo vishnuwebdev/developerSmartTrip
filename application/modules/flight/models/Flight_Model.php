@@ -187,7 +187,6 @@ class Flight_Model extends CI_Model {
 		}
 	}
                 
-        
 	function get_pax_by_id($id){
 		$this->db->select('*');
 		$this->db->from('flight_pax_list');

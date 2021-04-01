@@ -614,7 +614,6 @@ class Flight extends MX_Controller {
 			// $data ["allcountry"] = $allcountry;
 			$this->load->view ( "booking_detail_return", $data );
 		} else {
-			
 			// $allcountry = $this->Flight_Model->get_countries ();
 			// $data ["allcountry"] = $allcountry;
 			$flightdataconfrim = $this->session->userdata( "flight" )[$sessionid]['farequote_data']['confirm_price'];
@@ -624,9 +623,6 @@ class Flight extends MX_Controller {
 			$data ['baggage'] = $mealDynamicResult;
 			$data ['getBaggageData'] = $baggageData;
 			$data ['nationality'] = $nationality;
-			
-			// PrintArray($data); 
-	
 			$this->load->view ( "booking_detail", $data );
 		}
 	}
@@ -980,8 +976,6 @@ class Flight extends MX_Controller {
 			}else{
 				$arriveldataonword = $segment [$segcountoneword - 1]->Destination->Airport;
 			}
-
-			
 			$bookingData = array (
 				'fbook_total_fare' => $totalFare,
 				'fbook_customer_fare' => $totalFare,
@@ -1053,7 +1047,6 @@ class Flight extends MX_Controller {
 		$j = 0;
 		foreach ( $FBreakDwn as $val ) {
 			$noOfPx = $val->PassengerCount;
-			
 			for($i = 1; $i <= $noOfPx; $i++) {
 				$fld_pax_type = passanger_t_f_number ( $val->PassengerType );
 				$fpax_baggage_weight = ($i == 1) ? (int) $complimentoryBaggage : 0;
@@ -1179,7 +1172,6 @@ class Flight extends MX_Controller {
 	}
 	
 	function ticket_book_oneway($booking_id, $bookingdata) {		
-		
 		if ($_SESSION ['flight'] [$bookingdata->fbook_sessionid] ['farequote_data'] ['IsLCC'] == "true") {
 			$sessiondata = $_SESSION ['flight'] [$bookingdata->fbook_sessionid] ['farequote_data'];
 			$ticket_result = $this->ticket_lcc ( $booking_id, $sessiondata, $bookingdata->fbook_sessionid, "OB" );
@@ -1312,9 +1304,7 @@ class Flight extends MX_Controller {
 				$customer_data = $_SESSION ['flight'] [$sessionid] ['farequote_data_OB'] ['customer_data'];
 			}
 		}
-
 		$seatData = isset($_SESSION ['flight'] [$sessionid]['optional']->Response->SeatDynamic[0]->SegmentSeat[0]->RowSeats) ? $_SESSION ['flight'] [$sessionid]['optional']->Response->SeatDynamic[0]->SegmentSeat[0]->RowSeats : null;
-		
 		$seatSelectedDynamicData = [];
 		if(!empty( $seatData) && count($customer_data['seat_selection']) > 0){
 			$selectedSeat = $customer_data['seat_selection'];
@@ -1487,7 +1477,6 @@ class Flight extends MX_Controller {
 		$data_string = json_encode($search_data_tbo);
 		// echo "Start Time : ".date("h:i:s")."<br>";
 		// echo "Api URL : ".$this->url . '/Ticket/';
-		// PrintArray($data_string);
 		// PrintArray($search_data_tbo);
 		
 		$ch = curl_init($this->url . '/Ticket/');
@@ -1500,8 +1489,6 @@ class Flight extends MX_Controller {
 		));
 		$result = curl_exec($ch);
 		$arrayresult = json_decode($result);
-		// PrintArray($arrayresult);
-		// die;
 		if ($tickettype == "OB") {
 			$_SESSION ['flight'] [$sessionid] ['ticket_request_data'] = $data_string;
 			$_SESSION ['flight'] [$sessionid] ['ticket_result_data'] = $result;
@@ -2409,7 +2396,7 @@ class Flight extends MX_Controller {
 				$this->session->set_flashdata('flash_error','There is some problem in booking with your balance. Please contact Admin');
 				return redirect('/');
 			}
-		}			
+		} 	
 		if(empty($this->input->post ( 'wallet_amount' )) || ($this->input->post ( 'wallet_amount' ) == "customerCash" && $wallet_amt < $totalFare)) {
             
             $bp_user_id = $this->dsa_data->dsa_id;

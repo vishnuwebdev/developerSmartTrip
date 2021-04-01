@@ -2,18 +2,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
 <?php $this->load->view('include/header');
 	$visaDuration = 0;
-	
 	$currency = getCurrentCurrency();
 ?>
 <style>
-.ui-datepicker-trigger {
-    display: none !important;
-}
-
-select.error {
-    color: #6c757d !important;
-}
-
+	.ui-datepicker-trigger {
+		display: none !important;
+	}
+	select.error {
+		color: #6c757d !important;
+	}
 </style>
 <div class="main-field pt-2 pb-2 pt-md-4 pb-md-4">
 <div class="container">
@@ -417,7 +414,7 @@ select.error {
 			reader.readAsDataURL(file);
 			thumb.className += ' js--no-default';
 		}
-		function checkType(file,target){
+		function checkType(file, target){
 			let imageType = /image.*/;
 			if (!file.type.match(imageType)) {
 				throw 'Datei ist kein Bild';
@@ -481,7 +478,7 @@ select.error {
 			$(this).removeClass("error");
 			$(this).next("label").html("");
 		}
-	})
+	});
 
 </script>
 
