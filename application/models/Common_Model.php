@@ -13,8 +13,7 @@ class Common_Model extends CI_Model {
 		$query = $this->db->get($table);
 		if($query->num_rows() > 0){
 			return $query->row();
-		}
-		else{
+		} else{
 			return "0";
 		}
 	}

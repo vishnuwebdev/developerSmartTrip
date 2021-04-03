@@ -9,9 +9,6 @@ class Visa extends MX_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->helper('common_helper');
-        // if (($this->session->userdata('Userlogin') == NULL)) {
-        //         redirect('user/login');
-        //     }
     }
 
     public function index() {
@@ -22,21 +19,9 @@ class Visa extends MX_Controller {
 		$data["location_list"] 	= $this->VisaModel->visa_location_list();
         $category1 				= $this->VisaModel->get_category("1");
         $category2 				= $this->VisaModel->get_category("2");
-        
         $keywordarray = array();
         $masterkey = array();
         $singlearray = array();
-        foreach($getkeyword as $key=> $value){
-            if($value->search_keyword){
-                $keywordarray = explode(",",$value->search_keyword);
-                $masterkey = array_filter($keywordarray, 'strlen');
-                foreach($masterkey as $keyword){
-                    $singlearray[] = ($keyword);
-                }
-                
-            }
-
-        }
         $package1 		= $this->VisaModel->get_packages_by_category_id("1");
         $package2 		= $this->VisaModel->get_packages_by_category_id("2");
         $blogs 			= $this->VisaModel->get_blog_list("blog_list");

@@ -107,18 +107,22 @@ class CI_Session {
 		{
 			if (is_php('5.4'))
 			{
-				session_set_save_handler($class, TRUE);
+				if(session_status() == PHP_SESSION_NONE){
+					session_set_save_handler($class, TRUE);
+				}
 			}
 			else
 			{
-				session_set_save_handler(
-					array($class, 'open'),
-					array($class, 'close'),
-					array($class, 'read'),
-					array($class, 'write'),
-					array($class, 'destroy'),
-					array($class, 'gc')
-				);
+				if(session_status() == PHP_SESSION_NONE){
+					session_set_save_handler(
+						array($class, 'open'),
+						array($class, 'close'),
+						array($class, 'read'),
+						array($class, 'write'),
+						array($class, 'destroy'),
+						array($class, 'gc')
+					);
+				}
 
 				register_shutdown_function('session_write_close');
 			}
@@ -140,7 +144,9 @@ class CI_Session {
 			unset($_COOKIE[$this->_config['cookie_name']]);
 		}
 
-		session_start();
+		if(session_status() == PHP_SESSION_NONE){
+			session_start();
+		}
 
 		// Is session ID auto-regeneration configured? (ignoring ajax requests)
 		if ((empty($_SERVER['HTTP_X_REQUESTED_WITH']) OR strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest')
@@ -279,21 +285,24 @@ class CI_Session {
 		}
 		else
 		{
-			ini_set('session.name', $params['cookie_name']);
-			// ini_set('session.id', $params['cookie_name']);
+			if(session_status() == PHP_SESSION_NONE){
+				ini_set('session.name', $params['cookie_name']);
+				// ini_set('session.id', $params['cookie_name']);
+			}
 		}
 
 		isset($params['cookie_path']) OR $params['cookie_path'] = config_item('cookie_path');
 		isset($params['cookie_domain']) OR $params['cookie_domain'] = config_item('cookie_domain');
 		isset($params['cookie_secure']) OR $params['cookie_secure'] = (bool) config_item('cookie_secure');
-
-		session_set_cookie_params(
-			$params['cookie_lifetime'],
-			$params['cookie_path'],
-			$params['cookie_domain'],
-			$params['cookie_secure'],
-			TRUE // HttpOnly; Yes, this is intentional and not configurable for security reasons
-		);
+		if(session_status() == PHP_SESSION_NONE){
+			session_set_cookie_params(
+				$params['cookie_lifetime'],
+				$params['cookie_path'],
+				$params['cookie_domain'],
+				$params['cookie_secure'],
+				TRUE // HttpOnly; Yes, this is intentional and not configurable for security reasons
+			);
+		}
 
 		if (empty($expiration))
 		{
@@ -301,8 +310,10 @@ class CI_Session {
 		}
 		else
 		{
-			$params['expiration'] = (int) $expiration;
-			ini_set('session.gc_maxlifetime', $expiration);
+			if(session_status() == PHP_SESSION_NONE){
+				$params['expiration'] = (int) $expiration;
+				ini_set('session.gc_maxlifetime', $expiration);
+			}
 		}
 
 		$params['match_ip'] = (bool) (isset($params['match_ip']) ? $params['match_ip'] : config_item('sess_match_ip'));

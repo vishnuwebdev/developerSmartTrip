@@ -18,34 +18,7 @@
 		<div class="container">
 			<div class="search-tabbar">
 				<div class="search-buttons-col pb-3">
-					<ul class="nav nav-tabs">
-					  <li class="nav-item">
-					    <a class="nav-link <?php if($active_tab=="flight") { echo "active";} ?>" href="<?php echo site_url();?>">
-					    	<i class="icofont-ui-flight"></i> <span>Flight</span>
-					    </a>
-					  </li>
-					  <li class="nav-item">
-					    <a class="nav-link <?php if($active_tab=="hotel") { echo "active";} ?>"  href="<?php echo site_url('hotel')?>">
-					    	<i class="icofont-hotel"></i>
-					    	<span>Hotel</span>
-					    </a>
-					  </li>
-					  <li class="nav-item">
-					    <a class="nav-link <?php if($active_tab=="holiday") { echo "active";} ?>" href="<?php echo site_url();?>holiday">
-					    	<i class="icofont-beach-bed"></i>
-					    	<span>Holiday</span>
-					    </a>
-					  </li>
-
-					  <li class="nav-item">
-					    <a class="nav-link <?php if($active_tab=="visa") { echo "active";} ?>" href="<?php echo site_url();?>visa">
-							<i class="icofont-visa-alt"></i>
-					    	<span>Visa</span>
-					    </a>
-					  </li>
-
-
-					</ul>
+					<?= $this->load->view("searchNavBar",['active_tab'=>$active_tab]) ?>
 				</div>
 				<div class="search-tabbar-wrap">
 					<div class="tab-content">

@@ -1,55 +1,12 @@
 <!-- slider start from here -->
 <?php
-       if(empty($this->input->get('type'))){
-		  $active_tab = "flight";
-		} else {
-		  $active_tab = $this->input->get('type');
-		}
-		   		
+	$active_tab = !$this->uri->segment('1') ? "flight" : $this->uri->segment('1');	   		
 ?>
-	<!-- search section start from here -->
 	<div class="search-wrapper">
 		<div class="container">
 			<div class="search-tabbar">
 				<div class="search-buttons-col pb-3">
-					<ul class="nav nav-tabs ">
-					  <li class="nav-item">
-					    <a class="nav-link <?php if($active_tab=="flight") { echo "active";} ?>" data-toggle="tab" href="#flight-tab">
-					    	<i class="icofont-ui-flight"></i> <span>Flight</span>
-					    </a>
-					  </li>
-					  <li class="nav-item">
-					    <a class="nav-link <?php if($active_tab=="hotel") { echo "active";} ?>" href="<?php echo site_url();?>hotel">
-					    	<i class="icofont-hotel"></i>
-					    	<span>Hotel</span>
-					    </a>
-					  </li>
-					  <li class="nav-item">
-				<!--<a class="nav-link <?php if($active_tab=="holiday") { echo "active";} ?>" data-toggle="tab" href="#holiday-tab">
-					    	<i class="icofont-beach-bed"></i>
-					    	<span>Holiday</span>
-					    </a>-->
-					<a class="nav-link <?php if($active_tab=="holiday") { echo "active";} ?>" href="<?php echo site_url();?>holiday">
-					    	<i class="icofont-beach-bed"></i>
-					    	<span>Holiday</span>
-					    </a>
-						
-					  </li>
-
-
-					   <li class="nav-item">
-				
-					<a class="nav-link <?php if($active_tab=="visa") { echo "active";} ?>" href="<?php echo site_url();?>visa">
-						<i class="icofont-visa-alt"></i>
-					    	<span>Visa</span>
-					    </a>
-						
-					  </li>
-
-
-
-
-					</ul>
+					<?= $this->load->view("searchNavBar",['active_tab'=>$active_tab]) ?>
 				</div>
 				<div class="search-tabbar-wrap">
 					<div class="tab-content">
@@ -79,8 +36,8 @@
 					  			</div>
 					  			<!-- Flight OneWay -->
 					  			<div class="flight-oneway-view" id="oneway-flght">
-								<form action="<?php echo site_url(); ?>/flight/result" method="get" id="flight-form" autocomplete="off">
-							<input id="search_type" name="type" value="OneWay" class="custom-control-input" type="hidden">								
+									<form action="<?php echo site_url(); ?>/flight/result" method="get" id="flight-form" autocomplete="off">
+										<input id="search_type" name="type" value="OneWay" class="custom-control-input" type="hidden">								
 					  					<div class="row">
 					  						<div class="col-md-6">
 					  							<label for="">Flying From</label>
@@ -95,14 +52,15 @@
 					  							<label for="">Flying To</label>
 					  							<div class="input-group mb-3">
 					  								<div class="input-group-prepend">
-					  									<span class="input-group-text"><i class="icofont-google-map"></i></span>
+					  									<span class="input-group-text">
+														  	<i class="icofont-google-map"></i>
+														</span>
 													</div>
 													<input type="text" name="to_location" id="Editbox13" class="form-control flight_from_to0" onkeyup="flight_suggest_to(this.value,0);"  placeholder="City or Airport">
-												<input type="hidden" class="" name="from_country" id="flight_from_country0">
-											<input type="hidden" class="" name="to_country" id="flight_from_to_country0">
-											<input type="hidden" name="from_city_code" id="flight_from_city0">
-											<input type="hidden" name="to_city_code" id="flight_from_to_city0">
-												
+													<input type="hidden" class="" name="from_country" id="flight_from_country0">
+													<input type="hidden" class="" name="to_country" id="flight_from_to_country0">
+													<input type="hidden" name="from_city_code" id="flight_from_city0">
+													<input type="hidden" name="to_city_code" id="flight_from_to_city0">		
 												</div>
 					  						</div>
 					  						<div class="col-md-3 depart-flt">
@@ -132,58 +90,48 @@
 					  								<label for="">Traveller</label>
 					  								<div class="travel-wrap">
 					  									<a href="javascript:void(0)" class="form-control trvl-tgl">
-					  									<i class="icofont-user"></i>
-														<span class="flt-trv pr-1 guest_num">1</span>Traveller</a>
+					  										<i class="icofont-user"></i>
+															<span class="flt-trv pr-1 guest_num">1</span>Traveller
+														</a>
 					  									<div class="traveller-com">
-								<div class="col-trvl clearfix">
-												<label class="">Adult(12+ Yrs)</label>
-
-												<select name="no_adult" id="adults" class="form-control adult_select pop_select" required="required">
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-													<option value="5">5</option>
-													<option value="6">6</option>
-													<option value="7">7</option>
-													<option value="8">8</option>
-													<option value="9">9</option>
-												</select>
-											</div>
-											<div class="col-trvl clearfix">
-												<label class="">Child(2-11 Yrs)</label>
-												<select name="no_child" id="children" class="form-control child_select pop_select" required="required">
-													<option value="0">0</option>
-												<option value="1">1</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-												<option value="6">6</option>
-												<option value="7">7</option>
-												<option value="8">8</option>
-													</select>
-											</div>
-											<div class="col-trvl clearfix">
-												<label class="">Infant(Under 2Yrs)</label>
-												<select name="no_infants" id="children" class="form-control infent_select pop_select" required="required">
-														<option value="0">0</option>
-													<option value="1">1</option>
-													</select>
-											</div>
-										<!--<div class="col-trvl clearfix">
-												<label class="">Class</label>
-												<select name="cabin_class" id="class" class="form-control class_selected pop_select " required="required">
-													<option value="1" selected="">All</option>
-													<option value="2">First</option>
-													<option value="3">Business</option>
-													<option value="4">Economy</option>
-												</select>
-											</div>
-											-->
-											<div class="col-trvl clearfix text-right">
-												<a id="rooms_add" href="javascript:void(0)" class="btn btn-search searchenginehoteldone">DONE</a>
-											</div>
+															<div class="col-trvl clearfix">
+																<label class="">Adult(12+ Yrs)</label>
+																<select name="no_adult" id="adults" class="form-control adult_select pop_select" required="required">
+																	<option value="1">1</option>
+																	<option value="2">2</option>
+																	<option value="3">3</option>
+																	<option value="4">4</option>
+																	<option value="5">5</option>
+																	<option value="6">6</option>
+																	<option value="7">7</option>
+																	<option value="8">8</option>
+																	<option value="9">9</option>
+																</select>
+															</div>
+															<div class="col-trvl clearfix">
+																<label class="">Child(2-11 Yrs)</label>
+																<select name="no_child" id="children" class="form-control child_select pop_select" required="required">
+																	<option value="0">0</option>
+																	<option value="1">1</option>
+																	<option value="2">2</option>
+																	<option value="3">3</option>
+																	<option value="4">4</option>
+																	<option value="5">5</option>
+																	<option value="6">6</option>
+																	<option value="7">7</option>
+																	<option value="8">8</option>
+																</select>
+															</div>
+															<div class="col-trvl clearfix">
+																<label class="">Infant(Under 2Yrs)</label>
+																<select name="no_infants" id="children" class="form-control infent_select pop_select" required="required">
+																	<option value="0">0</option>
+																	<option value="1">1</option>
+																</select>
+															</div>
+															<div class="col-trvl clearfix text-right">
+																<a id="rooms_add" href="javascript:void(0)" class="btn btn-search searchenginehoteldone">DONE</a>
+															</div>
 					  									</div>	
 					  								</div>
 					  							</div>
@@ -205,13 +153,10 @@
 					  					</div>
 					  				</form>
 					  			</div><!--/ Flight OneWay End -->
-
-								
 					  			<!-- Multicity Flights -->
-								
 								<div class="flight-oneway-view flght-multi-wrap" id="multi-flght">
-					  			<form action="<?php echo site_url(); ?>/flight/result" method="get" id="searchform_multi" autocomplete="off" novalidate="novalidate">
-								<input type="hidden" name="type" value="MultiWay">
+					  				<form action="<?php echo site_url(); ?>/flight/result" method="get" id="searchform_multi" autocomplete="off" novalidate="novalidate">
+										<input type="hidden" name="type" value="MultiWay">
 					  					<div class="pickup_fields_wrap">
 						  					<div class="row">
 						  						<div class="col-md-4">
@@ -413,14 +358,9 @@
 					  				</form>
 					  			</div>
 					  			<!-- Multicity Flights end -->
-					  		
-						
-							
-							
 							</div>
 					  	</div>
-					 
-					 <div class="tab-pane <?php if($active_tab=="hotel") { echo "in active";} ?>" id="hotel-tab">
+					 	<div class="tab-pane <?php if($active_tab=="hotel") { echo "in active";} ?>" id="hotel-tab">
 					  		<div class="search-bar-col flight-wrap-col hotel-wrap-col">
 					  			<form action="">
 					  				<div class="row">
@@ -781,32 +721,26 @@
 					  	</div>
 					  	<div class="tab-pane <?php if($active_tab=="holiday") { echo "in active";} ?>" id="holiday-tab">
 					  		<div class="search-bar-col flight-wrap-col holiday-wrap-col">
-							
 					  			<form action="<?php echo site_url();?>holiday/holiday_list" method="get">
 					  				<div class="row">
 					  					<div class="col-md-6">
 				  							<div class="form-group">
-
-
-
-
-
-
 				  								<div class="ui-widget">
-  <label for="keyword">Search Holiday Packages: </label>
-  <input id="keyword" name="keyword" class="form-control custom-select">
-</div>
-
-
-
-				  								
+													<label for="keyword">Search Holiday Packages: </label>
+													<input id="keyword" name="keyword" class="form-control custom-select">
+												</div>
 				  							</div> 
 				  						</div>
 				  						<div class="col-md-12">	
 				  							<button id="flight-search" type="submit" class="btn btn-search" >Search</button>
 				  						</div>
 				  					</div>
-									</form>
+								</form>
+					  		</div>
+					  	</div>
+						<div class="tab-pane <?= ($active_tab == "bus") ? "in active" : null ?>" id="bus-tab">
+					  		<div class="search-bar-col flight-wrap-col holiday-wrap-col">
+					  			<?php $this->load->view('bus/search_form') ?>
 					  		</div>
 					  	</div>
 					</div>
@@ -816,15 +750,14 @@
 	</div><!--/ search section end from here -->
 	<!-- slider section start from here -->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script>
-  $( function() {
-    var availableTags = <?php print_r($keyword) ?>;
-    $( "#keyword" ).autocomplete({
-      source: availableTags,
-      minLength:1,   
-      delay:100,  
-	  autoFocus:true
-
-    });
-  } );
-  </script>	
+	<script>
+		$( function() {
+			var availableTags = <?php print_r($keyword) ?>;
+			$( "#keyword" ).autocomplete({
+				source: availableTags,
+				minLength:1,   
+				delay:100,  
+				autoFocus:true
+			});
+		});
+	</script>	

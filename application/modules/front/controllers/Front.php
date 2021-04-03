@@ -15,6 +15,7 @@ class Front extends MX_Controller {
 		$keywordarray = array();
         $masterkey = array();
         $singlearray = array();
+		$getkeyword = is_array($getkeyword) ? $getkeyword : [];
         foreach($getkeyword as $key=> $value){
                 if($value->search_keyword){
                     $keywordarray = explode(",",$value->search_keyword);

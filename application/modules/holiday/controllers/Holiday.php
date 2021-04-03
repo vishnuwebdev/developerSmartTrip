@@ -8,32 +8,23 @@ class Holiday extends MX_Controller {
         $this->load->Model('Common_Model');
 		//$this->load->Model('user/UserModel');
         $this->load->helper('common_helper');
-
-
-
         $this->load->helper(array('text','form', 'url'));
         $this->load->library('form_validation');
-
         $this->load->library(array('session'));
-
         $this->load->helper('url');
-
     }
 
     public function index() {
-
        unset ( $_SESSION ['holiday'] );
-		//redirect ( "" );
-
        $sliderimg = $this->HolidayModel->get_slider_img("slider_image");
        $data["sliderimg"] = $sliderimg;
-
        $category1 = $this->HolidayModel->get_category("1");
        $category2 = $this->HolidayModel->get_category("2");
        $getkeyword = $this->HolidayModel->get_keyword();
        $keywordarray = array();
        $masterkey = array();
        $singlearray = array();
+       $getkeyword = is_array($getkeyword) ? $getkeyword : [];
        foreach($getkeyword as $key=> $value){
         if($value->search_keyword){
             $keywordarray = explode(",",$value->search_keyword);
