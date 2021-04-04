@@ -1,66 +1,48 @@
 <script>
-    function travel_suggest(inputString,id) {
+    const autoCompleteHTTPRequest  = function (request, response, inputString) {
+        $.ajax({
+            type: "POST",
+            url: "<?= site_url() ?>bus/get_cities",
+            dataType : "json",
+            cache : false,
+            data: {id: inputString},
+            success: function(data){
+                var findCities = [];
+                var ittrateCount = data.length;
+                for(var i=0; i < ittrateCount; i++){
+                    findCities.push({ 
+                        "city_code": data[i].CityId, 
+                        "value": data[i].CityName 
+                    });
+                }
+                response(findCities);
+            }	
+        });	  
+    } 
+
+    function travel_suggest(inputString) {
         $( "#from_travel" ).autocomplete({
             autoFocus: true,	
             minLength : 2,
-            source : function(request, response) {
-                $.ajax({
-                    type: "POST",
-                    url: "<?php echo site_url() ?>bus/get_cities",
-                    dataType : "json",
-                    cache : false,
-                    data: {id: inputString,div_id:id},
-                    success: function(data){
-                        var all_l=[];
-                        for(var i=0;i<data.length;i++){
-                            var city_name=data[i].airport_city_name; 
-                            var air_name=data[i].airport_name; 
-                            var air_code=data[i].airport_code;
-                            var air_country_code=data[i].airport_country_code; 
-                            var air_city_code = data[i].airport_city_code;
-                            all_l.push({ "label": city_name+" ("+air_name+"), "+air_code, "value": city_name+" ("+air_name+"), "+air_code, "country": air_country_code,"city": air_city_code } );
-                        }
-                        response(all_l);
-                    }	
-                });	  
-            },
+            source : function (e, r) { autoCompleteHTTPRequest(e, r, inputString) },
             select: function(event, ui) {
-                $( "#flight_from_country"+id).val(ui.item.country);	
-                $( "#flight_from_city"+id).val(ui.item.city);	
-                $( ".flight_from_to"+id).focus();	
+                $( "#from_travel").val(ui.item.value);	
+                $( "#from_city").val(ui.item.city_code);	
+                $( "#to_travel").focus();	
             },
         });    
     }
 
-    function travel_suggest_to(inputString,id) {
-        $( ".flight_from_to"+id ).autocomplete({
+    function travel_suggest_to(inputString) {
+        $( "#to_travel" ).autocomplete({
             autoFocus: true,	
             minLength : 2,
-            source : function(request, response) {
-                $.ajax({
-                    type: "POST",
-                    url: "<?php echo site_url() ?>/front/fetch_city",
-                    dataType : "json",
-                    cache : false,
-                    data: {id: inputString,div_id:id},
-                    success: function(data){
-                        var all_l=[];
-                        for(var i=0;i<data.length;i++){
-                            var city_name=data[i].airport_city_name; 
-                            var air_name=data[i].airport_name; 
-                            var air_code=data[i].airport_code;
-                            var air_country_code=data[i].airport_country_code; 
-                            var air_city_code = data[i].airport_city_code;
-                            all_l.push({ "label": city_name+" ("+air_name+"), "+air_code, "value": city_name+" ("+air_name+"), "+air_code, "country": air_country_code,"city": air_city_code } );
-                        }
-                        response(all_l);
-                    }	
-                });	  
-            },
+            source : function (e, r) { autoCompleteHTTPRequest(e, r, inputString) },
             select: function(event, ui) {
-                $( "#flight_from_to_country"+id ).val(ui.item.country);	
-                $( "#flight_from_to_city"+id ).val(ui.item.city);	
-                $( "#depart_date" ).focus();
+                console.log(ui.item);
+                $( "#to_travel").val(ui.item.value);	
+                $( "#to_city").val(ui.item.city_code);	
+                $( "#travel_date" ).focus();
             },
         });    
     }
@@ -75,8 +57,41 @@
         beforeShow: function() {
             $('#ui-datepicker-div').addClass("searchdatepicker");
         },
-        onClose: function(selectedDate){
-            // $("#return_date").datepicker("option", "minDate", selectedDate);
+        onClose: function(selectedDate){}
+    });
+
+    var cityErrorMsg = "Please select the city by the type name of city.";
+    $("#bus_search").validate({
+        ignore: [],
+        rules: {
+            from_city: {
+                required: function () {  
+                    var fromCity = $("#from_city").val();
+                    if(!fromCity){
+                        $("#bus_search").validate().showErrors({ 
+                            "from_travel": cityErrorMsg 
+                        }); 
+                    }
+                }
+            },
+            to_city: {
+                required: function () { 
+                    var toCity = $("#to_city").val();
+                    if(!toCity){
+                        $("#bus_search").validate().showErrors({
+                            "to_travel": cityErrorMsg
+                        }); 
+                    } 
+                }
+            },
+            travel_date: {
+                required: true,
+            }
+        },
+        messages: {
+            travel_date: {
+                required: "Please select the travel date.",
+            }
         }
     });
 </script>

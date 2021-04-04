@@ -752,7 +752,7 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script>
 		$( function() {
-			var availableTags = <?php print_r($keyword) ?>;
+			var availableTags = `<?= isset($keyword) ? print_r($keyword) : null ?>`;
 			$( "#keyword" ).autocomplete({
 				source: availableTags,
 				minLength:1,   

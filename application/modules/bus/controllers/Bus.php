@@ -15,6 +15,8 @@ class Bus extends MX_Controller {
 		$this->load->library ( array ('session',"form_validation") );
 		// $this->load->helper ( array ('text','form','url' ) );
 		$this->authorzie();
+		$path = __DIR__."/../assets/cities.json";
+		$this->cities = file_get_contents($path);
 		
 	}
 
@@ -76,26 +78,49 @@ class Bus extends MX_Controller {
 		$this->load->view("bus/index.php");
 	}
 
-	function getCity(){
-		$path = __DIR__."/../assets/cities.json";
-		$cities = file_get_contents($path);
-		$result = json_decode($cities, true);
-		$findCities = [];
+	/**
+	 * Filter Cities by the type characters
+	 * @method POST
+	 * @param id type of characters
+	 * @return json resonse 
+	 */
+	public function get_cities(){
+		$typedKey = $this->input->post("id");
+		$result = json_decode($this->cities, true);
+		$filterCitites = [];
 		foreach($result as $item ){
-			if($this->FindString($item['CityName'], "raj")){
-				PrintArray($item);
+			if($this->FindString($item['CityName'], $typedKey)){
+				array_push($filterCitites,$item);
 			}
 		}
-		die;
+		echo json_encode($filterCitites);
 	}
 	
-
-	function FindString($string,$charcter){   
-		//https://stackoverflow.com/questions/4366730/how-do-i-check-if-a-string-contains-a-specific-word
+	/**
+	 * Filter method by the string 
+	 * @source https://stackoverflow.com/questions/4366730/how-do-i-check-if-a-string-contains-a-specific-word
+	 * @param string Source string
+	 * @param string type character/string
+	 * @return boolean
+	 */
+	private function FindString($string,$charcter){   
 		$i = "i";
 		if(preg_match("/{$charcter}/{$i}", $string)) {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Search buses reqeust nodes
+	 * @method GET
+	 * @param sourceId
+	 * @param destinationId
+	 * @param departureDate
+	 * @return render page
+	 */
+	public function search(){
+		$request = (object) $this->input->get();
+		PrintArray($request);
 	}
 }
