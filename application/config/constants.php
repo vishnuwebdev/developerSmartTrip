@@ -110,3 +110,5 @@ define("RAZOR_PAY_HOST","https://api.razorpay.com/v1/");
 define("RAZOR_API_KEY","rzp_test_JqpjechtbRBDd4");
 define("RAZOR_CLIENT_SECRET","LXdsYJ04EtYkHXIEzQqeHQpi");
 
+define("BUS_SEARCH_API", "http://api.tektravels.com/BookingEngineService_Bus/Busservice.svc/rest/Search/");
+

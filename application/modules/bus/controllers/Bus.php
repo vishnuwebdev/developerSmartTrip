@@ -66,11 +66,7 @@ class Bus extends MX_Controller {
 			"EndUserIp" => $this->EndUserIp,
 		];
 		$requstString = json_encode($data);
-		$headerData  = [
-			'Content-Type: application/json',
-			'Content-Length: ' . strlen($requstString),
-		];
-		$curlResponse = curlPost($this->auth_url, $requstString, $headerData);
+		$curlResponse = curlPost($this->auth_url, $requstString);
 		return $curlResponse->format;
 	}
 
@@ -121,6 +117,31 @@ class Bus extends MX_Controller {
 	 */
 	public function search(){
 		$request = (object) $this->input->get();
-		PrintArray($request);
+		$requestParams = [
+			"DateOfJourney" => date("Y/m/d", strtotime($request->travel_date)),
+			"SourceId" => $request->from_city,
+			"DestinationId" => $request->to_city,
+			"PreferredCurrency" => getCurrentCurrency()
+		];
+		PrintArray($requestParams);
+		$requestString = $this->makeRequestString($requestParams);
+		PrintArray($requestString);
+		$curlResponse = curlPost(BUS_SEARCH_API, $requestString);
+		PrintArray($curlResponse->format);
 	}
+
+	/**
+	 * Building the request format for the CURL Call
+	 * @param Array Request parameters
+	 * @return json_encoded data
+	 */
+	private function makeRequestString($params = []){
+		$data = [
+			"TokenId" => $this->TokenId,
+			"EndUserIp" => $this->EndUserIp
+		];
+		$buidRequest = array_merge($data, $params);
+		return json_encode($buidRequest);
+	}
+
 }

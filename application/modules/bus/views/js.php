@@ -94,4 +94,14 @@
             }
         }
     });
+
+    
+    $("#travel_date").on("change",function(){
+        var city = $(this).val();
+        if(city){
+            $(this).removeClass("error");
+            $(this).next("label").html("");
+        }
+    });
+
 </script>
