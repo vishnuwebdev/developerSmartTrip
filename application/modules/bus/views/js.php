@@ -104,4 +104,77 @@
         }
     });
 
+    if(isBusSearchSection){
+        var current_page = 0;
+        function getBusCards(){
+            if(current_page * PER_PAGE < totalRecords){
+                $('#loader').modal('show');
+                $.ajax({
+                    type: "POST",
+                    url: "<?= site_url() ?>bus/loadCards?page="+current_page,
+                    data:{},
+                    success:function (data) {
+                        data = $.parseJSON(data);
+                        var buses = data.list;
+                        $('.bus_card_list').append(buses);
+                        $('.lazy').Lazy();
+                        $('#loader').modal('hide');
+                    }
+                });
+                current_page++;
+            }
+        }
+
+        function getDocHeight() {
+            var D = document;
+            return Math.max(
+                D.body.scrollHeight, D.documentElement.scrollHeight,
+                D.body.offsetHeight, D.documentElement.offsetHeight,
+                D.body.clientHeight, D.documentElement.clientHeight
+            );
+        }
+
+        var sIndex = 11, offSet = 10, isPreviousEventComplete = true, isDataAvailable = true;
+        $(window).scroll(function() {
+            var bp_document_heigh=getDocHeight();
+            bp_document_heigh=bp_document_heigh-50;
+            if($(window).scrollTop() + $(window).height() >= bp_document_heigh) {
+                isPreviousEventComplete = false;
+                getBusCards();
+            }
+        });
+
+        getBusCards();
+
+        // var min="<?= ceil($price->min) ?>";
+        // var max="<?= ceil($price->max) ?>";
+        // max = max > 10000 ? max : 10000;
+        // console.log(min,max);
+        // $( "#price_filter_slider" ).slider({
+        //     range: true,
+        //     min: min,
+        //     max: max,
+        //     values: [ min, max ],
+        //     slide: function( event, ui ) {
+        //         $( "#amount" ).val( "<?= isset($js_currency_symbol) ? $js_currency_symbol : null ?> " + ui.values[0]);
+        //         $( "#amount1" ).val("<?= isset($js_currency_symbol) ? $js_currency_symbol : null ?> " + ui.values[1]);
+        //         min=ui.values[0];
+        //         // max=ui.values[1];     
+        //         max = ui.values[1] > 1000 ? ui.values[1] : 10000;
+        //     }
+        // });
+        // $("#amount").val("<?= isset($js_currency_symbol) ? $js_currency_symbol : null ?> " + min );
+        // $("#amount1").val("<?= isset($js_currency_symbol) ? $js_currency_symbol : null ?> " + max );  
+
+
+        $("#bus_name").on("keyup",function(){
+            var bus_name = $(this).val();
+            $(".travel_card").hide().filter(function () {
+                var bus = $(this).attr("traveller-name").toUpperCase();
+                return bus.indexOf(bus_name.toUpperCase()) != -1;
+            }).show();
+        });
+
+
+    }
 </script>

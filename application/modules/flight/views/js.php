@@ -817,7 +817,7 @@ $("#search_flight_c").click(function(e){
 
 
 
-  $(function () {
+    $(function () {
 
         $(".pax_validation_continue").click(function () {
 
@@ -996,7 +996,7 @@ $("#search_flight_c").click(function(e){
 
 
 
-   $(function () {
+    $(function () {
 	   
         var indexID = null;
 

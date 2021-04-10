@@ -116,18 +116,18 @@ class Bus extends MX_Controller {
 	 * @return render page
 	 */
 	public function search(){
+		return $this->load->view("search/search");
 		$request = (object) $this->input->get();
 		$requestParams = [
 			"DateOfJourney" => date("Y/m/d", strtotime($request->travel_date)),
-			"SourceId" => $request->from_city,
+			"OriginId" => $request->from_city,
 			"DestinationId" => $request->to_city,
 			"PreferredCurrency" => getCurrentCurrency()
 		];
-		PrintArray($requestParams);
+		$this->session->set_userdata('search_request',$requestParams);
 		$requestString = $this->makeRequestString($requestParams);
-		PrintArray($requestString);
 		$curlResponse = curlPost(BUS_SEARCH_API, $requestString);
-		PrintArray($curlResponse->format);
+		return $this->handleSearchResponse($curlResponse->format);
 	}
 
 	/**
@@ -143,5 +143,87 @@ class Bus extends MX_Controller {
 		$buidRequest = array_merge($data, $params);
 		return json_encode($buidRequest);
 	}
+
+	/**
+	 * Handling the Bus Search Response
+	 * @param Search Respnose Object
+	 * @return Mixed
+	 */
+	private function handleSearchResponse($response){
+		if(isset($response) && isset($response->BusSearchResult)){
+			$busResult = $response->BusSearchResult;
+			if($busResult->ResponseStatus !== 1){
+				return $this->failedSearchResponse();
+			}
+			return $this->loadBusSearchList($busResult);
+		}
+		return $this->failedSearchResponse();
+	}
+
+
+	/**
+	 * Handling the Failed Search Response
+	 * @param null
+	 * @return Render View
+	 */
+	private function failedSeachResponse(){
+		//Load the eampty search page
+	}
+
+	/**
+	 * Handling the Bus Search List Records
+	 * @param Object
+	 * @return Mixed
+	 */
+	private function loadBusSearchList($result){
+		if(isset($result->BusResults)){
+			$searchData = [
+				'traceId' => $result->TraceId,
+				"boardingCity" => $result->Origin ,
+				"droppingCity" => $result->Destination
+			];
+			$busData = [
+				'search_result' => $result->BusResults,
+				'search_data' => $searchData
+			];
+			$this->session->set_userdata("bus", $busData);
+			return $this->load->view("search/search");
+		}
+		return $this->failedSeachResponse();
+	}
+
+	/**
+	 * Loading Bus Card List
+	 * @param Mixed
+	 * @return Json
+	 */
+	public function loadCards($page = 1){
+		$page = isset($_REQUEST['page']) ? ( int ) $_REQUEST['page'] : $page;
+		$cardsData= [];
+		$result = $_SESSION ['bus'] ['search_result'];
+		$total = count($result); 
+		$limit = PER_PAGE;
+		$totalPages = ceil ( $total / $limit ); // calculate total pages
+		$page = max ( $page, 1 ); // get 1 page when $_GET['page'] <= 0
+		$page = min ( $page, $totalPages ); // get last page when $_GET['page'] > $totalPages
+		$offset = (int) ($page - 1) * $limit;
+		$cardsData = array_slice ( $result, $offset, $limit );
+		$_SESSION ['showing'] = $page * $limit;
+		$_SESSION ['total_pages'] = $totalPages;
+		$hotels = $this->getFormatedHotels ( $cardsData );
+		echo json_encode ( $hotels );
+	}
+
+	function getFormatedHotels($response) {
+		$cards = array ();
+		foreach ( $response as $key => $item ) {
+			$cards['list'][] = $this->load->view("search/card", ['key'=>$key, "item"=> $item ],true);
+		}
+		$cards ['total'] = count($_SESSION ['bus'] ['search_result']);
+		$cards['showing'] = $_SESSION ['showing'];
+		$cards ['total_pages'] = $_SESSION ['total_pages'];
+		return $cards;
+	}
+
 
 }

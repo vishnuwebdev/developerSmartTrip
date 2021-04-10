@@ -799,4 +799,42 @@ if (!function_exists('bp_pagination')) {
         }
     }
 
+    if ( !function_exists('dd')){
+        function dd($data){
+            PrintArray($data); die;
+        }
+    }
+
+    if ( !function_exists('safe')){
+        function safe($data){
+            return isset($data) && !empty($data) ? (string) $data : null;
+        }
+    }
+
+    if ( !function_exists('busMaxMinPrice')){
+        function busMaxMinPrice($data){
+            $min = 0;
+            $max = 0;
+            if(is_array($data)){
+                foreach($data as $item){
+                    if(isset($item->BusPrice)){
+                        $price = isset($item->BusPrice->PublishedPriceRoundedOff) ? $item->BusPrice->PublishedPriceRoundedOff : null;
+                        if($price){
+                            $min = $min === 0 ? $price : $min;
+                            $max = $max === 0 ? $price : $max;
+                            $min =  ($min > $price) ? $price : $min;
+                            $max = ($max < $price) ? $price : $max;
+                        }
+                    }
+                }
+            }
+            return (object) [
+                "min" => $min,
+                "max" => $max
+            ];
+        }
+    }
+
+
+
 ?>

@@ -102,9 +102,7 @@
 				});
 			}
 
-			// var amt = covertAmount(200);
-			// amt.then(item=>console.log(item)).catch(err=>console.log(err));
-			
+			var PER_PAGE = "<?= PER_PAGE ?>";
 			
 		</script>
 		
