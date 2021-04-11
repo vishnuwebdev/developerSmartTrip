@@ -103,8 +103,8 @@
             $(this).next("label").html("");
         }
     });
-
-    if(isBusSearchSection){
+    console.log(typeof isBusSearchSection);
+    if(typeof isBusSearchSection != "undefined"){
         var current_page = 0;
         function getBusCards(){
             if(current_page * PER_PAGE < totalRecords){
@@ -146,8 +146,8 @@
 
         getBusCards();
 
-        // var min="<?= ceil($price->min) ?>";
-        // var max="<?= ceil($price->max) ?>";
+        // var min="<?= isset($price) ?  ceil($price->min) : 0 ?>";
+        // var max="<?= isset($price) ? ceil($price->max) : 0 ?>";
         // max = max > 10000 ? max : 10000;
         // console.log(min,max);
         // $( "#price_filter_slider" ).slider({

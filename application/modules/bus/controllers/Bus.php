@@ -116,7 +116,6 @@ class Bus extends MX_Controller {
 	 * @return render page
 	 */
 	public function search(){
-		return $this->load->view("search/search");
 		$request = (object) $this->input->get();
 		$requestParams = [
 			"DateOfJourney" => date("Y/m/d", strtotime($request->travel_date)),
