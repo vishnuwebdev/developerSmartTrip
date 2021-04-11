@@ -1,11 +1,10 @@
 <?php 
 	$this->load->view('include/head');
  	$this->load->view('include/header');
-	$result = $_SESSION ['bus']['search_result'];
-	$searchData = $_SESSION ['bus'] ['search_data'];
-	$currencyCode = getCurrentCurrency();
-	$currencyCode = $result[0]->BusPrice->CurrencyCode;
-	$price = busMaxMinPrice($result);
+	$result = isset($_SESSION ['bus']['search_result']) ? $_SESSION ['bus']['search_result'] : [];
+	$searchData = $_SESSION ['search_request'];
+	$currencyCode = isset($result[0]->BusPrice->CurrencyCode) ? $result[0]->BusPrice->CurrencyCode : getCurrentCurrency();
+	$price = isset($result) ? busMaxMinPrice($result) : [];
 	if( $currencyCode == "USD" ){
 		$js_currency_symbol = "$";
 	}else if( $currencyCode == "AED" ){
@@ -16,8 +15,6 @@
 ?>
 
 	<?= $this->load->view("searchHeader",['searchData'=>$searchData]) ?>
-
-	<!-- Flight Result Main -->
 	<section class="flght-result-oneway htl-result-listing pt-2 pb-2 pt-md-3 pb-md-3">
 		<div class="container-fluid">
 			<div class="row">
@@ -25,16 +22,16 @@
 				<div class="col-md-9">
 					<div class="htl-result-right-list paul-htl-result-list">
 						<div class="hotel-result-list-col bus_card_list">
+							<?php if(!isset($result) || count($result) < 1) { ?>
+								<center> No Record Found </center>
+							<?php }?>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- Flight Result Main  end-->
 
-
-	<!-- Modify Search Popup -->
 	<div class="modal fade" id="modify-search">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -56,11 +53,11 @@
 	</div>
 
 
-<!-------new end--------->
-<?php $this->load->view('include/footer');?>
-<script src="<?php echo site_url();?>assets/js/jquery_lazy_master/jquery.lazy.min.js"></script>
-<script type="text/javascript">
-    var isBusSearchSection = true;
-	var totalRecords = "<?= count($result) ?>";
-</script>
-<?php $this->load->view('bus/js',['js_currency_symbol'=>$js_currency_symbol,"price"=>$price]);?> 
+	<!-------new end--------->
+	<?php $this->load->view('include/footer');?>
+	<script src="<?php echo site_url();?>assets/js/jquery_lazy_master/jquery.lazy.min.js"></script>
+	<script type="text/javascript">
+		var isBusSearchSection = true;
+		var totalRecords = "<?= isset($result) ? count($result) : 0 ?>";
+	</script>
+	<?php $this->load->view('bus/js',['js_currency_symbol'=>$js_currency_symbol,"price"=>$price]);?> 

@@ -785,17 +785,21 @@ if (!function_exists('bp_pagination')) {
 
     if ( !function_exists('curlPost')){
         function curlPost($url, $requestData = '', $headers = []){
-            $headerData  = [
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($requestData),
-            ];
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $requestData);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headerData);
-            $result = curl_exec($ch);	 
-            return (object) ['row'=> $result, 'format'=> json_decode($result)];
+            try {
+                $headerData  = [
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($requestData),
+                ];
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $requestData);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headerData);
+                $result = curl_exec($ch);	 
+                return (object) ['row'=> $result, 'format'=> json_decode($result)];
+            }catch(Exception $e){
+                return (object) ['row'=> null, 'format'=> null];
+            }
         }
     }
 

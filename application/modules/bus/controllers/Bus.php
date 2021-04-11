@@ -117,11 +117,14 @@ class Bus extends MX_Controller {
 	 */
 	public function search(){
 		$request = (object) $this->input->get();
+		$this->session->set_userdata('bus',[]);
 		$requestParams = [
 			"DateOfJourney" => date("Y/m/d", strtotime($request->travel_date)),
 			"OriginId" => $request->from_city,
 			"DestinationId" => $request->to_city,
-			"PreferredCurrency" => getCurrentCurrency()
+			"PreferredCurrency" => getCurrentCurrency(),
+			"boardingCity" => $request->from_travel,
+			"droppingCity" => $request->to_travel
 		];
 		$this->session->set_userdata('search_request',$requestParams);
 		$requestString = $this->makeRequestString($requestParams);
@@ -165,8 +168,8 @@ class Bus extends MX_Controller {
 	 * @param null
 	 * @return Render View
 	 */
-	private function failedSeachResponse(){
-		//Load the eampty search page
+	private function failedSearchResponse(){
+		return $this->load->view("search/search");
 	}
 
 	/**
@@ -176,14 +179,11 @@ class Bus extends MX_Controller {
 	 */
 	private function loadBusSearchList($result){
 		if(isset($result->BusResults)){
-			$searchData = [
-				'traceId' => $result->TraceId,
-				"boardingCity" => $result->Origin ,
-				"droppingCity" => $result->Destination
-			];
+			$searchRequest = $this->session->userdata('search_request');
+			$searchRequest['traceId'] = $result->TraceId;
+			$this->session->set_userdata('search_request',$searchRequest);
 			$busData = [
-				'search_result' => $result->BusResults,
-				'search_data' => $searchData
+				'search_result' => $result->BusResults
 			];
 			$this->session->set_userdata("bus", $busData);
 			return $this->load->view("search/search");
@@ -218,9 +218,9 @@ class Bus extends MX_Controller {
 		foreach ( $response as $key => $item ) {
 			$cards['list'][] = $this->load->view("search/card", ['key'=>$key, "item"=> $item ],true);
 		}
-		$cards ['total'] = count($_SESSION ['bus'] ['search_result']);
+		$cards['total'] = count($_SESSION ['bus'] ['search_result']);
 		$cards['showing'] = $_SESSION ['showing'];
-		$cards ['total_pages'] = $_SESSION ['total_pages'];
+		$cards['total_pages'] = $_SESSION ['total_pages'];
 		return $cards;
 	}
 
