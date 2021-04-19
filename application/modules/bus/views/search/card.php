@@ -7,6 +7,9 @@
     $customer_fare = ceil($publish_fare);
     $pickupPoint = $item->BoardingPointsDetails[0]->CityPointName;
     $dropupPoint = $item->DroppingPointsDetails[0]->CityPointName;
+    $arrivalTime = date("D, d M, Y h:i A",strtotime($item->ArrivalTime));
+    $departureTime = date("D, d M, Y h:i A",strtotime($item->DepartureTime));
+    // dd($item);
 ?>
 <div class="travel_card card_<?= $key ?>" traveller-name="<?= $item->TravelName ?>">
     <div class="price_div" price="<?= $customer_fare ?>">
@@ -35,12 +38,22 @@
                                         <b>Maximum Booking Seats </b>: <?= $item->MaxSeatsPerTicket ?>
                                     </span>
                                 </div>
-                                <div class="htl-add">
+                                <!-- <div class="htl-add">
                                     <span class="area">
                                         <b>Pickup City Point</b>: <?= $pickupPoint ?>
                                     </span>
                                     <span class="area">
                                         <b>Drop City Point </b>: <?= $dropupPoint ?>
+                                    </span>
+                                </div> -->
+                                <div class="htl-add">
+                                    <span class="area">
+                                        <b>Departure Time</b>: <?= $departureTime ?>
+                                    </span>
+                                </div>
+                                <div class="htl-add">
+                                    <span class="area">
+                                        <b>Arrival Time</b>: <?= $arrivalTime ?>
                                     </span>
                                 </div>
                             </div>
@@ -53,12 +66,9 @@
                                     </div>
                                 </div>
                                 <div class="htl-view-list">
-                                    <form  action="<?= site_url () ?>bus/booking_detail" method="POST" target="_blank">
-                                        <input type="hidden" name="result_index" value="<?= $item->ResultIndex ?>">
-                                        <input type="hidden" name="hotel_name" value="<?= $item->TravelName ?>">
-                                        <input type="hidden" name="array_index" value="<?= $key ?>">
-                                        <button type="submit" class="btn btn-search booknow">View Detail</button>
-                                    </form>
+                                    <!-- <button type="button" class="btn btn-search booknow">View Detail</button> -->
+                                    <a href="#cancel-<?= $item->ResultIndex ?>" data-toggle="modal" class="btn danger-bg fz10 mb-10">Cancel Policy</a>
+                                    <a href="#boarding-<?= $item->ResultIndex ?>" data-toggle="modal" class=" btn danger-bg fz10 mb-10">Boarding Details</a>
                                 </div>
                             </div>
                         </div>
@@ -69,3 +79,9 @@
     </div>
 </div>
 <!------end new box----------->
+<?= (isset($item->CancellationPolicies) && count($item->CancellationPolicies) > 0) ? $this->load->view("cancellation_model",[ 'policy' => $item->CancellationPolicies, 'key' => $item->ResultIndex ])  : null   ?>
+<?php
+    if(isset($item->DroppingPointsDetails) && count($item->DroppingPointsDetails) > 0 && isset($item->BoardingPointsDetails) && count($item->BoardingPointsDetails) > 0){
+        $this->load->view("boarding_model",[ 'boarding' => $item->BoardingPointsDetails, 'key' => $item->ResultIndex, 'dropping' => $item->DroppingPointsDetails]);
+    } 
+?>
