@@ -103,7 +103,7 @@
             $(this).next("label").html("");
         }
     });
-    console.log(typeof isBusSearchSection);
+    
     if(typeof isBusSearchSection != "undefined"){
         var current_page = 0;
         function getBusCards(){
@@ -146,27 +146,6 @@
 
         getBusCards();
 
-        // var min="<?= isset($price) ?  ceil($price->min) : 0 ?>";
-        // var max="<?= isset($price) ? ceil($price->max) : 0 ?>";
-        // max = max > 10000 ? max : 10000;
-        // console.log(min,max);
-        // $( "#price_filter_slider" ).slider({
-        //     range: true,
-        //     min: min,
-        //     max: max,
-        //     values: [ min, max ],
-        //     slide: function( event, ui ) {
-        //         $( "#amount" ).val( "<?= isset($js_currency_symbol) ? $js_currency_symbol : null ?> " + ui.values[0]);
-        //         $( "#amount1" ).val("<?= isset($js_currency_symbol) ? $js_currency_symbol : null ?> " + ui.values[1]);
-        //         min=ui.values[0];
-        //         // max=ui.values[1];     
-        //         max = ui.values[1] > 1000 ? ui.values[1] : 10000;
-        //     }
-        // });
-        // $("#amount").val("<?= isset($js_currency_symbol) ? $js_currency_symbol : null ?> " + min );
-        // $("#amount1").val("<?= isset($js_currency_symbol) ? $js_currency_symbol : null ?> " + max );  
-
-
         $("#bus_name").on("keyup",function(){
             var bus_name = $(this).val();
             $(".travel_card").hide().filter(function () {
@@ -175,6 +154,96 @@
             }).show();
         });
 
+        $(document).on("click",".booknow",function(){
+            var traceId = $(this).attr("data-trace");
+            var resultIndex = $(this).attr("data-index");
+            var loaderContent = $("#loader").find(".modal-body").html();
+            var modelBody = $("#book-now-"+resultIndex).find(".modal-body");
+            modelBody.html(loaderContent);
+            $("#book-now-"+resultIndex).show();
+            var request = $.ajax({
+                type: "POST",
+                url: "<?= site_url() ?>bus/storeTraceInfo",
+                data:{
+                    traceId : traceId,
+                    resultIndex : resultIndex
+                }
+            });
+            request.done(function(response){
+                window.location.href = "<?= site_url() ?>bus/seatLayout";
+            });
+            request.fail(function(e){
+                modelBody.html("<h2>Someting went wrong please try again.");
+                setTimeout(() => {
+                    $("#book-now-"+resultIndex).hide();
+                }, 3000);
+            });
 
+        });
+
+    }
+
+    if(typeof isLayoutSection != "undefined"){
+        var settings = {
+            rows: 5,
+            cols: 20,
+            rowCssPrefix: 'row-',
+            colCssPrefix: 'col-',
+            seatWidth: 40,
+            seatHeight: 40,
+            seatCss: 'seat',
+            selectedSeatCss: 'selectedSeat',
+            selectingSeatCss: 'selectingSeat'
+        };
+
+        var init = function (reservedSeat) {
+            var str = [], seatNo, className;
+            for (i = 0; i < settings.rows; i++) {
+                for (j = 0; j < settings.cols; j++) {
+                    seatNo = (i + j * settings.rows + 1);
+                    className = settings.seatCss + ' ' + settings.rowCssPrefix + i.toString() + ' ' + settings.colCssPrefix + j.toString();
+                    if ($.isArray(reservedSeat) && $.inArray(seatNo, reservedSeat) != -1) {
+                        className += ' ' + settings.selectedSeatCss;
+                    }
+                    str.push('<li class="' + className + '"' +
+                                'style="top:' + (i * settings.seatHeight).toString() + 'px;left:' + (j * settings.seatWidth).toString() + 'px">' +
+                                '<a title="' + seatNo + '">' + seatNo + '</a>' +
+                                '</li>');
+                }
+            }
+            $('#place').html(str.join(''));
+        };
+        //case I: Show from starting
+        //init();
+
+        //Case II: If already booked
+        var bookedSeats = [5, 10, 25];
+        init(bookedSeats);
+
+        $('.' + settings.seatCss).click(function () {
+            if ($(this).hasClass(settings.selectedSeatCss)){
+                //alert('This seat is already reserved');
+            }
+            else{
+                $(this).toggleClass(settings.selectingSeatCss);
+            }
+        });
+        
+        $('#btnShow').click(function () {
+            var str = [];
+            $.each($('#place li.' + settings.selectedSeatCss + ' a, #place li.'+ settings.selectingSeatCss + ' a'), function (index, value) {
+                str.push($(this).attr('title'));
+            });
+            alert(str.join(','));
+        })
+        
+        $('#btnShowNew').click(function () {
+            var str = [], item;
+            $.each($('#place li.' + settings.selectingSeatCss + ' a'), function (index, value) {
+                item = $(this).attr('title');                   
+                str.push(item);                   
+            });
+            alert(str.join(','));
+        });
     }
 </script>

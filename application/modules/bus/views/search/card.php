@@ -66,9 +66,9 @@
                                     </div>
                                 </div>
                                 <div class="htl-view-list">
-                                    <!-- <button type="button" class="btn btn-search booknow">View Detail</button> -->
-                                    <a href="#cancel-<?= $item->ResultIndex ?>" data-toggle="modal" class="btn danger-bg fz10 mb-10">Cancel Policy</a>
-                                    <a href="#boarding-<?= $item->ResultIndex ?>" data-toggle="modal" class=" btn danger-bg fz10 mb-10">Boarding Details</a>
+                                    <button href="#book-now-<?= $item->ResultIndex ?>"  data-toggle="modal" type="button" data-index="<?= $item->ResultIndex ?>" data-trace="<?= $traceId ?>" class="btn btn-search booknow">Book</button>
+                                    
+                                    <a href="#combo-<?= $item->ResultIndex ?>" data-toggle="modal" class="btn danger-bg fz10 mb-10">Traveller Details</a>
                                 </div>
                             </div>
                         </div>
@@ -79,9 +79,7 @@
     </div>
 </div>
 <!------end new box----------->
-<?= (isset($item->CancellationPolicies) && count($item->CancellationPolicies) > 0) ? $this->load->view("cancellation_model",[ 'policy' => $item->CancellationPolicies, 'key' => $item->ResultIndex ])  : null   ?>
 <?php
-    if(isset($item->DroppingPointsDetails) && count($item->DroppingPointsDetails) > 0 && isset($item->BoardingPointsDetails) && count($item->BoardingPointsDetails) > 0){
-        $this->load->view("boarding_model",[ 'boarding' => $item->BoardingPointsDetails, 'key' => $item->ResultIndex, 'dropping' => $item->DroppingPointsDetails]);
-    } 
+    $this->load->view("combo_model",['item'=>$item,"key"=>$item->ResultIndex]);
+    $this->load->view("seat_model",['item'=>$item,"key" =>$item->ResultIndex]);
 ?>

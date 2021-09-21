@@ -109,7 +109,8 @@ define("RAZOR_PAY_HOST","https://api.razorpay.com/v1/");
 // define("RAZOR_CLIENT_SECRET","RJJmzKqbkc4WK0Yr5ZYWVdqA");    
 define("RAZOR_API_KEY","rzp_test_JqpjechtbRBDd4");
 define("RAZOR_CLIENT_SECRET","LXdsYJ04EtYkHXIEzQqeHQpi");
-
-define("BUS_SEARCH_API", "http://api.tektravels.com/BookingEngineService_Bus/Busservice.svc/rest/Search/");
+define("BUS_API_NODE","http://api.tektravels.com/BookingEngineService_Bus/Busservice.svc/rest/");
+define("BUS_SEARCH_API", BUS_API_NODE."Search/");
+define("BUS_SEAT_LAYOUT_API", BUS_API_NODE."GetBusSeatLayOut/");
 define("PER_PAGE", 50);
 

@@ -1,0 +1,55 @@
+#holder {
+  height: 15rem;
+  width: 90%;
+  background-color: #f5f5f5;
+  border: 1px solid #a4a4a4;
+  margin: 3rem;
+}
+#place {
+  position: relative;
+  margin: 7px;
+}
+#place a {
+  font-size: 0.6em;
+}
+#place li {
+  list-style: none outside none;
+  position: absolute;
+}
+#place li:hover {
+  background-color: yellow;
+}
+#place .seat {
+  background: url("images/available_seat_img.gif") no-repeat scroll 0 0
+    transparent;
+  height: 33px;
+  width: 33px;
+  padding-left: 0px;
+  display: block;
+}
+#place .selectedSeat {
+  background-image: url("images/booked_seat_img.gif");
+}
+#place .selectingSeat {
+  background-image: url("images/selected_seat_img.gif");
+}
+#place .row-3,
+#place .row-4 {
+  margin-top: 2rem;
+}
+#seatDescription li {
+  verticle-align: middle;
+  list-style: none outside none;
+  padding-left: 35px;
+  height: 35px;
+  float: left;
+}
+.selectd_seat{
+    background:url('images/selected_seat_img.gif') no-repeat scroll 0 0 transparent;
+}
+.available_seat{
+    background:url('images/available_seat_img.gif') no-repeat scroll 0 0 transparent;
+}
+.booked_seat{
+    background:url('images/booked_seat_img.gif') no-repeat scroll 0 0 transparent;
+}

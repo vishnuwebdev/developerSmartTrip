@@ -162,7 +162,6 @@ class Bus extends MX_Controller {
 		return $this->failedSearchResponse();
 	}
 
-
 	/**
 	 * Handling the Failed Search Response
 	 * @param null
@@ -209,19 +208,72 @@ class Bus extends MX_Controller {
 		$cardsData = array_slice ( $result, $offset, $limit );
 		$_SESSION ['showing'] = $page * $limit;
 		$_SESSION ['total_pages'] = $totalPages;
-		$hotels = $this->getFormatedHotels ( $cardsData );
+		$hotels = $this->getFormatedTravels ( $cardsData );
 		echo json_encode ( $hotels );
 	}
 
-	function getFormatedHotels($response) {
+	/**
+	 * Preparing Bus Travels card
+	 * @param Array
+	 * @return Array
+	 */
+	function getFormatedTravels($response) {
 		$cards = array ();
+		$searchRequest = $this->session->userdata("search_request");
 		foreach ( $response as $key => $item ) {
-			$cards['list'][] = $this->load->view("search/card", ['key'=>$key, "item"=> $item ],true);
+			$cards['list'][] = $this->load->view("search/card", ['key'=>$key, "item"=> $item, "traceId" => $searchRequest['traceId'] ],true);
 		}
 		$cards['total'] = count($_SESSION ['bus'] ['search_result']);
 		$cards['showing'] = $_SESSION ['showing'];
 		$cards['total_pages'] = $_SESSION ['total_pages'];
 		return $cards;
+	}
+
+	/**
+	 * Store Traveller card index
+	 * @param POST
+	 * @return boolean
+	 */
+	public function storeTraceInfo(){
+		if($this->session->has_userdata('traceLog')){
+			$this->session->unset_userdata(tracelog);
+		}
+		$request = (object) $this->input->post();
+		$requestParams = [
+			"EndUserIp" =>$this->EndUserIp,
+			"TokenId" => $this->TokenId,
+			"TraceId" => $request->traceId,
+			"ResultIndex" => $request->resultIndex
+		];
+		$this->session->set_userdata('traceLog',$requestParams);
+		return true;
+	}
+
+
+	/**
+	 * Getting Seat layout 
+	 * @param 
+	 * @return 
+	 */
+	public function seatLayout(){
+		if(!$this->session->has_userdata('traceLog')){
+			redirect("/bus");
+		}
+		$requestParams = $this->session->userdata("traceLog");
+		$requestString = $this->makeRequestString($requestParams);
+		$curlResponse = curlPost(BUS_SEAT_LAYOUT_API, $requestString);
+		return $this->loadSeatLayout($curlResponse->format);
+	}
+
+	/**
+	 * Manage Seat Layout
+	 * @param Array
+	 * @return 
+	 */
+	public function loadSeatLayout($response){
+		// dd($response);
+		PrintArray($response);
+		$this->load->view("search/layout");
 	}
 
 
